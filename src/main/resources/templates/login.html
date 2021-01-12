@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:text-align="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Spring Security Example </title>
+    <style>
+.centered {
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+
+    </style>
+</head>
+<body>
+<div   th:if="${param.error}" style="text-align: center;">
+    Invalid username and password.
+</div>
+<div   th:if="${param.logout}" style="text-align: center;">
+    You have been logged out.
+</div>
+<div style="text-align: center; background-color: #e7e7e7; color: black; display: block; position: fixed;top: 30%;  left: 50%;
+  transform: translate(-50%, -50%);
+  "  >
+<form th:action="@{/authenticateTheUser}"  method="post" style="background-color: #e7e7e7; color: black;">
+    <div style="    padding: 50px 2px 3px 4px;"><label> User Name : <input type="text" name="username"  /> </label></div>
+    <br>
+    <div style="    padding: 20px 2px 3px 4px;"><label> Password: <input type="password" name="password"/> </label></div>
+    <br>
+    <div style="    padding: 20px 2px 15px 4px;"><input type="submit" value="LogIn" style="  background-color: #1E90FF; text-align: center;" /></div>
+</form>
+</div>
+</body>
+</html>

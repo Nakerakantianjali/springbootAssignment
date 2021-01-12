@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/html"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="UTF-8">
+    <style>
+        .header {
+  overflow: hidden;
+  background-color: #f1f1f1;
+  padding: 20px 10px;
+}
+
+/* Style the header links */
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+/* Style the logo link (notice that we set the same value of line-height and font-size to prevent the header to increase when the font gets bigger */
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+/* Change the background color on mouse-over */
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Style the active/current link*/
+.header a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+
+/* Add media queries for responsiveness - when the screen is 500px wide or less, stack the links on top of each other */
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+}
+    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <title>employeeList</title>
+</head>
+<body>
+<div class="header">
+
+    <div >
+        <a class="active" th:href="@{/employee/profile}">profile</a>
+        <a sec:authorize="hasAnyAuthority('admin','TeamLead')"  th:href="@{/employee/list}">employee</a>
+
+    </div>
+    <form  style="margin-left: 1100px;" form-method="post" th:action="@{/logout}">
+
+        <button class="btn btn-outline-danger  " type="submit" value="Logout">Logout</button>
+    </form>
+</div>
+    <div class="container">
+<h3>Employee form</h3>
+<hr>
+<form  sec:authorize="hasAuthority('admin')" action="#" th:action="@{/employee/save}"
+      th:object="${employee}" method="POST">
+
+    <input style="display: block;margin-bottom: 20px;" type="hidden" th:field="*{id}"/>
+    Name :<input style="display: block;margin-bottom: 20px;" type="text" th:field="*{username}"
+           placeholder="Name"/>
+    <p class="alert alert-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+
+    Role:<input style="display: block;margin-bottom: 20px; "type="text" th:field="*{role}"
+           placeholder="role"/><br>
+    <p class="alert alert-danger" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></p>
+
+    Project:<input style="display: block;margin-bottom: 20px;" type="text" th:field="*{project}"
+           placeholder="project"/><br>
+    <p class="alert alert-danger" th:if="${#fields.hasErrors('project')}" th:errors="*{project}"></p>
+
+    <button type="submit" class="btn btn-info col-2">save</button>
+</form>
+
+</div>
+</body>
+</html>
